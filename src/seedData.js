@@ -15,7 +15,7 @@ const seedUsers = [
 
 const seedBoards = [
   {
-    type: "Cheddar",
+    type: "Just Cheddar",
     description: "Just Cheddar",
     rating: 1,
   },
