@@ -37,7 +37,7 @@ describe("User, Board and Cheese Models", () => {
     expect(users.length).toEqual(1);
     expect(users[0].name).toEqual("user1");
     expect(boards.length).toEqual(2);
-    expect(boards[0].type).toEqual("Cheddar");
+    expect(boards[0].type).toEqual("Just Cheddar");
     expect(cheeses.length).toEqual(2);
     expect(cheeses[0].title).toEqual("Cheddar");
   });
@@ -96,5 +96,37 @@ describe("User, Board and Cheese Models", () => {
     const cheddarBoards = await cheddar.getBoards();
 
     expect(cheddarBoards.length).toEqual(2);
+  });
+
+  // Eager load data
+  it("can load a User with Board data", async () => {
+    const userData = await User.findAll({
+      include: [{ model: Board }],
+    });
+
+    expect(userData.length).toEqual(1);
+    expect(userData[0].Boards.length).toEqual(2);
+    expect(userData[0].Boards[0].type).toEqual("Just Cheddar");
+  });
+
+  it("can load a Cheese with Board data", async () => {
+    const cheeseData = await Cheese.findAll({
+      include: [{ model: Board }],
+    });
+
+    expect(cheeseData.length).toEqual(2);
+    expect(cheeseData[0].Boards.length).toEqual(2);
+    expect(cheeseData[0].Boards[0].type).toEqual("Just Cheddar");
+  });
+
+  it("can load a Board with Cheese and User data", async () => {
+    const boardData = await Board.findAll({
+      include: [{ model: User }, { model: Cheese }],
+    });
+
+    expect(boardData.length).toEqual(2);
+    expect(boardData[0].User.name).toEqual("user1");
+    expect(boardData[1].Cheeses.length).toEqual(2);
+    expect(boardData[1].Cheeses[0].title).toEqual("Cheddar");
   });
 });
