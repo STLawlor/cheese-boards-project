@@ -15,18 +15,18 @@ const seedUsers = [
 
 const seedBoards = [
   {
-    type: "board1",
-    description: "board1 descr",
+    type: "Cheddar",
+    description: "Just Cheddar",
     rating: 1,
   },
   {
-    type: "board2",
-    description: "board2 descr",
+    type: "Cheddar Brie",
+    description: "Cheddar and Brie",
     rating: 2,
   },
   {
-    type: "board3",
-    description: "board3 descr",
+    type: "Brie Feta",
+    description: "Brie and Feta",
     rating: 3,
   },
 ];
