@@ -10,6 +10,7 @@ describe("User, Board and Cheese Models", () => {
     board1 = await Board.create(seedBoards[0]);
     board2 = await Board.create(seedBoards[0]);
     cheddar = await Cheese.create(seedCheeses[0]);
+    brie = await Cheese.create(seedCheeses[1]);
   });
 
   // Create, Find, Delete Model data
@@ -36,8 +37,8 @@ describe("User, Board and Cheese Models", () => {
     expect(users.length).toEqual(1);
     expect(users[0].name).toEqual("user1");
     expect(boards.length).toEqual(2);
-    expect(boards[0].type).toEqual("board1");
-    expect(cheeses.length).toEqual(1);
+    expect(boards[0].type).toEqual("Cheddar");
+    expect(cheeses.length).toEqual(2);
     expect(cheeses[0].title).toEqual("Cheddar");
   });
 
@@ -72,7 +73,7 @@ describe("User, Board and Cheese Models", () => {
 
     await cheeseDelete.destroy();
     const cheeses = await Cheese.findAll();
-    expect(cheeses.length).toEqual(1);
+    expect(cheeses.length).toEqual(2);
   });
 
   // Model association
@@ -81,5 +82,19 @@ describe("User, Board and Cheese Models", () => {
     const user1Boards = await user1.getBoards();
 
     expect(user1Boards.length).toEqual(2);
+  });
+
+  it("can add Cheeses to Board", async () => {
+    await board2.addCheese([cheddar, brie]);
+    const board2Cheeses = await board2.getCheeses();
+
+    expect(board2Cheeses.length).toEqual(2);
+  });
+
+  it("can add Boards to Cheese", async () => {
+    await cheddar.addBoard([board1, board2]);
+    const cheddarBoards = await cheddar.getBoards();
+
+    expect(cheddarBoards.length).toEqual(2);
   });
 });
